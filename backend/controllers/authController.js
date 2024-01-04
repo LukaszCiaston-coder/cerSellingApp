@@ -4,6 +4,10 @@ const { Schema } = mongoose;
 
 // Model użytkownika
 const userSchema = new Schema({
+  name: {
+    type: String,
+    required: [true, "Name is required"],
+  },
   email: {
     type: String,
     required: [true, "Email is required"],
@@ -19,7 +23,7 @@ const User = mongoose.model("User", userSchema);
 
 const register = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { name, email, password } = req.body;
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -30,6 +34,7 @@ const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const newUser = new User({
+      name,
       email,
       password: hashedPassword,
     });
@@ -39,7 +44,9 @@ const register = async (req, res) => {
     // Zapisz identyfikator użytkownika w sesji po rejestracji
     req.session.userId = newUser._id;
 
-    res.status(201).json({ user: { email: newUser.email } });
+    res.status(201).json({
+      user: { name: newUser.name, email: newUser.email, userId: newUser._id },
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -63,7 +70,10 @@ const login = async (req, res) => {
     // Zapisz identyfikator użytkownika w sesji po udanym logowaniu
     req.session.userId = user._id;
 
-    res.status(200).json({ message: "Login successful" });
+    res.status(200).json({
+      message: "Login successful",
+      user: { email: user.email, userId: user._id, name: user.name }, // Dodaj pole name
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });

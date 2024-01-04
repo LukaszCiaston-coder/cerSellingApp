@@ -1,0 +1,81 @@
+.registerForm {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0px 2px 4px rgb(0 0 0 / 10%);
+  position: relative;
+  background-color: rgb(255, 32, 32);
+}
+
+.registerInputContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  padding: 8px;
+}
+.registerInputContainer:hover,
+.registerInputContainer.focus {
+  border: 2px solid #ccc;
+}
+.registerIcon {
+  margin-right: 8px;
+  color: rgba(248, 247, 245, 0.8);
+}
+
+input {
+  flex: 1;
+  padding: 8px;
+  font-size: 14px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: rgba(248, 247, 245, 0.8);
+}
+
+input::placeholder {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  color: rgba(250, 248, 248, 0.8);
+  transition: top 0.3s ease, font-size 0.3s ease, color 0.3s ease;
+}
+
+.registerInputContainer.focus input::placeholder,
+.registerInputContainer input:focus::placeholder {
+  top: 3px;
+  font-size: 10px;
+  color: rgba(250, 248, 248, 0.5);
+}
+
+.registerButton {
+  padding: 10px 15px;
+  background-color: rgba(0, 123, 255, 0.8);
+  color: white;
+  border: none;
+  border-radius: 10px 30px 10px 30px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.registerButton:hover {
+  background-color: rgba(46, 204, 113, 0.8);
+}
+
+.toLogin {
+  margin-top: 10px;
+  text-decoration: none;
+  text-decoration-line: underline;
+  color: #fffdfd;
+}
+.toLogin:hover {
+  font-size: 18px; /* Możesz dostosować rozmiar czcionki według swoich preferencji */
+}

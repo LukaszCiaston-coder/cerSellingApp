@@ -1,10 +1,12 @@
 const { Car } = require("../models/carModel");
+const { ObjectId } = require("mongoose").Types;
 
 const getCars = async (req, res) => {
   try {
     const cars = await Car.find();
     res.status(200).json({ cars });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -18,23 +20,36 @@ const getCarById = async (req, res) => {
     }
     res.status(200).json({ car });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
 const createCar = async (req, res) => {
-  const { make, model, year, price, description, owner } = req.body;
+  const { make, model, year, price, description, owner, photos } = req.body;
 
   try {
-    // Import ObjectId z mongoose
-    const { ObjectId } = require("mongoose").Types;
+    // Ensure that photoId values are valid ObjectId instances
+    const validatedPhotos = photos.map((photo) => ({
+      photoId: new ObjectId(photo.photoId),
+      url: photo.url,
+    }));
 
     // Sprawdź, czy owner jest poprawnym ObjectId
     if (!ObjectId.isValid(owner)) {
       return res.status(400).json({ message: "Invalid owner ID" });
     }
 
-    const newCar = new Car({ make, model, year, price, description, owner });
+    const newCar = new Car({
+      make,
+      model,
+      year,
+      price,
+      description,
+      owner,
+      photos: validatedPhotos,
+    });
+
     await newCar.save();
     res.status(201).json({ car: newCar });
   } catch (error) {
@@ -58,6 +73,7 @@ const updateCar = async (req, res) => {
     }
     res.status(200).json({ car });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -72,6 +88,26 @@ const deleteCar = async (req, res) => {
     }
     res.status(200).json({ message: "Car deleted successfully" });
   } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+const searchCars = async (req, res) => {
+  const { query } = req.query;
+
+  try {
+    const cars = await Car.find({
+      $or: [
+        { make: { $regex: query, $options: "i" } },
+        { model: { $regex: query, $options: "i" } },
+        { description: { $regex: query, $options: "i" } },
+      ],
+    });
+
+    res.status(200).json({ cars });
+  } catch (error) {
+    console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -82,4 +118,5 @@ module.exports = {
   getCarById,
   updateCar,
   deleteCar,
+  searchCars,
 };
