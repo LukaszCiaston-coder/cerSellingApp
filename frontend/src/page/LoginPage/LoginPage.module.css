@@ -1,0 +1,35 @@
+/* LoginPage.module.css */
+
+.loginPage {
+  display: flex;
+  height: 100vh;
+}
+
+.leftContainer {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.rightContainer {
+  flex: 1;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Additional styles for responsiveness (optional) */
+
+@media (max-width: 768px) {
+  .loginPage {
+    flex-direction: column;
+  }
+
+  .leftContainer,
+  .rightContainer {
+    flex: none;
+    width: 100%;
+  }
+}

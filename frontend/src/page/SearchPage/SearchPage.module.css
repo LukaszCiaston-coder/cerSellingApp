@@ -1,0 +1,13 @@
+/* SearchPage.module.css */
+.searchPage {
+  padding: 20px;
+}
+
+.searchResults {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* You can add more styles as needed */

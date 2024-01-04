@@ -1,0 +1,35 @@
+/* RegisterPage.module.css */
+
+.registerPage {
+  display: flex;
+  height: 100vh;
+}
+
+.leftContainer {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.rightContainer {
+  flex: 1;
+  background-size: contain; /* Zmiana z 'cover' na 'contain' */
+  background-repeat: no-repeat; /* Dodanie braku powtórzeń tła */
+  background-position: center;
+}
+
+/* Dodatkowe style dla responsywności (opcjonalne) */
+
+@media (max-width: 768px) {
+  .registerPage {
+    flex-direction: column;
+  }
+
+  .leftContainer,
+  .rightContainer {
+    flex: none;
+    width: 100%;
+  }
+}

@@ -30,15 +30,17 @@ const carSchema = new mongoose.Schema(
     },
     photos: [
       {
-        type: String,
-        validate: {
-          validator: (value) => {
-            // Custom validation for each photo URL
-            // You can customize this validation based on your needs
-            // For simplicity, this example checks if the value is a string
-            return typeof value === "string";
+        photoId: {
+          type: mongoose.Schema.Types.ObjectId,
+          default: mongoose.Types.ObjectId, // Wywołaj funkcję, aby uzyskać nowy ObjectId
+          unique: true,
+        },
+        url: {
+          type: String,
+          validate: {
+            validator: (value) => typeof value === "string",
+            message: "Invalid photo URL",
           },
-          message: "Invalid photo URL",
         },
       },
     ],

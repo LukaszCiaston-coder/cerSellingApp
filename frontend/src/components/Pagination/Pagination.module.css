@@ -1,0 +1,29 @@
+/* Pagination.module.css */
+.pagination {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.pagination li {
+  margin-right: 5px;
+}
+
+.pagination a {
+  text-decoration: none;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  color: #333;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.pagination a:hover {
+  background-color: #f4f4f4;
+}
+
+.pagination .active a {
+  background-color: #007bff;
+  color: #fff;
+}

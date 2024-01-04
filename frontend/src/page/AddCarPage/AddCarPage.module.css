@@ -1,0 +1,12 @@
+/* AddCarPage.module.css */
+
+.addCarPage {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.addCarPage h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
