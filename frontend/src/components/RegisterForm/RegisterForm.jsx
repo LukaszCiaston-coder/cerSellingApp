@@ -47,6 +47,7 @@ const RegisterForm = ({ onRegister }) => {
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
+          autoComplete="username"
         />
       </div>
 
@@ -59,6 +60,7 @@ const RegisterForm = ({ onRegister }) => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          autoComplete="email"
         />
       </div>
       <div className={styles.registerInputContainer}>
@@ -70,6 +72,7 @@ const RegisterForm = ({ onRegister }) => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+          autoComplete="new-password"
         />
       </div>
       <button className={styles.registerButton} type="submit">

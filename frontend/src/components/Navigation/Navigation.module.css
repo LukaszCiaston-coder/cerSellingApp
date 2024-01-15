@@ -1,36 +1,28 @@
-/* Navigation.module.css */
 .nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  padding: 10px;
-  background-color: #f2f2f2;
+  padding: 15px;
+  background-color: #f80e0e;
+  position: relative;
 }
 
-.nav a {
-  text-decoration: none;
-  color: #333;
+.logo {
   font-weight: bold;
+  text-decoration: none;
+  color: black;
+  font-size: 30px;
 }
 
-button {
-  cursor: pointer;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  padding: 8px;
-  border-radius: 5px;
-}
-
-button:hover {
-  background-color: #45a049;
+.colorWhite {
+  color: #ffffff;
 }
 
 .mobileIcon {
   display: none;
   cursor: pointer;
   font-size: 1.5rem;
+  color: white;
 }
 
 .menuItems {
@@ -39,11 +31,14 @@ button:hover {
   gap: 20px;
 }
 
-/* Dodaj nowe style dla menu na ekranach mobilnych */
+.menuItems a {
+  text-decoration: none;
+  color: #f2f2f2;
+  font-weight: bold;
+}
+
+/* Mobile Styles */
 @media (max-width: 768px) {
-  .nav {
-    justify-content: flex-end;
-  }
   .mobileIcon {
     display: block;
   }
@@ -51,9 +46,9 @@ button:hover {
   .menuItems {
     flex-direction: column;
     position: absolute;
-    top: 50px;
+    top: 70px;
     right: 0;
-    background-color: #f2f2f2;
+    background-color: #f80e0e;
     text-align: center;
     display: none;
     z-index: 10;
@@ -70,4 +65,12 @@ button:hover {
   .menuItems.open {
     display: flex;
   }
+}
+
+/* Tablet Styles */
+@media (min-width: 769px) and (max-width: 1024px) {
+}
+
+/* Desktop Styles */
+@media (min-width: 1025px) {
 }

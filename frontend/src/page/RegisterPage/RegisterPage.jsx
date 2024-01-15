@@ -1,3 +1,5 @@
+// RegisterPage.js
+
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import RegisterForm from "../../components/RegisterForm/RegisterForm";
@@ -12,7 +14,7 @@ const RegisterPage = ({ onRegister, backgroundImg }) => {
 
     if (userData && userData.email && userData.userId && userData.name) {
       const { email, userId, name } = userData;
-      onRegister({ email, userId, name }); // Dodajemy name
+      onRegister({ email, userId, name });
       navigate(`/`);
     } else {
       console.error("Invalid userData:", userData);
@@ -21,13 +23,16 @@ const RegisterPage = ({ onRegister, backgroundImg }) => {
 
   return (
     <div className={styles.registerPage}>
-      <div className={styles.leftContainer}>
+      <div
+        className={styles.leftContainer}
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+        }}
+      ></div>
+      <div className={styles.registerAnimation}></div>
+      <div className={styles.rightContainer}>
         <RegisterForm onRegister={handleRegister} />
       </div>
-      <div
-        className={styles.rightContainer}
-        style={{ backgroundImage: `url(${backgroundImg || backgroundImage})` }}
-      ></div>
     </div>
   );
 };

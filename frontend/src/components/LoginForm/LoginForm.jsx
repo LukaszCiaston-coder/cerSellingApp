@@ -71,6 +71,7 @@ const LoginForm = ({ onSubmit }) => {
           value={formData.email}
           onChange={handleChange}
           required
+          autoComplete="email"
         />
       </div>
       <div
@@ -87,15 +88,15 @@ const LoginForm = ({ onSubmit }) => {
           onBlur={handlePasswordBlur}
           value={formData.password}
           onChange={handleChange}
-          autoComplete="current-password" // Dodaj to
+          autoComplete="current-password"
           required
         />
       </div>
       <button className={styles.loginButton} type="submit">
-        Zaloguj się
+        Login
       </button>
       <Link to="/register" className={styles.toRegister}>
-        Zarejestruj się
+        Register
       </Link>
     </form>
   );

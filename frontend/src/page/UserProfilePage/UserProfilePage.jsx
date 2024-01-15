@@ -1,38 +1,39 @@
-// UserProfilePage.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./UserProfilePage.module.css";
 
 const UserProfilePage = ({ user, onLogout }) => {
-  const [isLogoutModalOpen, setLogoutModalOpen] = useState(false);
   const navigate = useNavigate();
+  const [isModalOpen, setModalOpen] = useState(true);
 
   const handleLogout = () => {
     onLogout();
-    setLogoutModalOpen(false);
-    // Dodaj dowolne inne akcje, które chcesz wykonać po wylogowaniu
     navigate("/");
+  };
+
+  const handleCancel = () => {
+    setModalOpen(false);
   };
 
   return (
     <div>
-      <h1>User Profile</h1>
-      {user && (
-        <div>
-          <p>Name: {user.name}</p>
-          <p>Email: {user.email}</p>
+      {isModalOpen && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <h1>User Profile</h1>
+            {user && (
+              <div>
+                <p>Name: {user.name}</p>
+                <p>Email: {user.email}</p>
+              </div>
+            )}
+
+            <p>Czy na pewno chcesz się wylogować?</p>
+            <button onClick={handleLogout}>Logout</button>
+            <button onClick={handleCancel}>Anuluj</button>
+          </div>
         </div>
       )}
-
-      {isLogoutModalOpen && (
-        <div className={styles.modal}>
-          <p>Czy na pewno chcesz się wylogować?</p>
-          <button onClick={handleLogout}>Logout</button>
-          <button onClick={() => setLogoutModalOpen(false)}>Anuluj</button>
-        </div>
-      )}
-
-      <button onClick={() => setLogoutModalOpen(true)}>Logout</button>
     </div>
   );
 };

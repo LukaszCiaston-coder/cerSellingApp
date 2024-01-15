@@ -1,3 +1,4 @@
+// AddCarForm.jsx
 import React, { useState } from "react";
 import axios from "axios";
 import styles from "./AddCarForm.module.css";
@@ -6,6 +7,7 @@ const AddCarForm = ({ onSubmit }) => {
   const [make, setMake] = useState("");
   const [model, setModel] = useState("");
   const [price, setPrice] = useState("");
+  const [currency, setCurrency] = useState("USD"); // Default currency is USD
   const [description, setDescription] = useState("");
   const [photo, setPhoto] = useState(null);
 
@@ -16,6 +18,7 @@ const AddCarForm = ({ onSubmit }) => {
       formData.append("make", make);
       formData.append("model", model);
       formData.append("price", price);
+      formData.append("currency", currency);
       formData.append("description", description);
       formData.append("photo", photo);
 
@@ -54,13 +57,24 @@ const AddCarForm = ({ onSubmit }) => {
       </div>
       <div className={styles.formGroup}>
         <label htmlFor="price">Price:</label>
-        <input
-          type="number"
-          id="price"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          required
-        />
+        <div className={styles.currencySelector}>
+          <input
+            type="number"
+            id="price"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            required
+          />
+          <select
+            value={currency}
+            onChange={(e) => setCurrency(e.target.value)}
+          >
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+            {/* Add more currency options as needed */}
+          </select>
+        </div>
       </div>
       <div className={styles.formGroup}>
         <label htmlFor="description">Description:</label>
@@ -71,13 +85,14 @@ const AddCarForm = ({ onSubmit }) => {
           required
         />
       </div>
-      <div className={styles.formGroup}>
+      <div className={`${styles.formGroup} ${styles.fileInputContainer}`}>
         <label htmlFor="photo">Photo:</label>
         <input
           type="file"
           id="photo"
           onChange={(e) => setPhoto(e.target.files[0])}
           accept="image/*"
+          className={styles.fileInput}
         />
       </div>
       <button type="submit">Add Car</button>

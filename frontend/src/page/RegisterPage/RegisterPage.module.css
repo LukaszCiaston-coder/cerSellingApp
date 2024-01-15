@@ -1,35 +1,93 @@
-/* RegisterPage.module.css */
-
 .registerPage {
   display: flex;
   height: 100vh;
+  background-color: #333;
 }
 
-.leftContainer {
+.backgroundContainer {
+  flex: 1;
+  position: relative;
+}
+
+.rightContainer {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
 }
-
-.rightContainer {
+.leftContainer {
   flex: 1;
-  background-size: contain; /* Zmiana z 'cover' na 'contain' */
-  background-repeat: no-repeat; /* Dodanie braku powtórzeń tła */
+  background-size: contain;
+  background-repeat: no-repeat;
   background-position: center;
+  z-index: 4;
+  margin-left: 50px;
 }
-
-/* Dodatkowe style dla responsywności (opcjonalne) */
 
 @media (max-width: 768px) {
   .registerPage {
     flex-direction: column;
   }
 
-  .leftContainer,
-  .rightContainer {
-    flex: none;
+  .leftContainer {
+    display: none;
     width: 100%;
+  }
+  .registerAnimation {
+    display: none;
+  }
+}
+.registerAnimation {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background-color: #646f87;
+  box-shadow: 0 0 20px #00a78e;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto;
+  bottom: 3%;
+  left: 30%;
+  transform: translateX(-50%);
+}
+
+.registerAnimation::before {
+  content: "";
+  position: absolute;
+  inset: -10px 200px;
+  background: linear-gradient(315deg, #210be6, #ff0202);
+  transition: 0.5s;
+  animation: rotateGradient 10s linear infinite;
+}
+
+@keyframes rotateGradient {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.registerAnimation:hover::before {
+  inset: -20px 0px;
+}
+
+.registerAnimation::after {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  background: #6a6a6b;
+  border-radius: 50%;
+  z-index: 1;
+}
+@media (min-width: 678px) and (max-width: 1200px) {
+  .registerAnimation {
+    width: 300px;
+    height: 300px;
+    bottom: 15%;
+  }
+  .registerAnimation::before {
+    inset: -10px 140px;
   }
 }

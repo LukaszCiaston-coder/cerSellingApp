@@ -19,7 +19,7 @@ const LoginPage = ({ onLogin, backgroundImg }) => {
     ) {
       const { email, userId, name } = userData.user;
       onLogin({ email, userId, name });
-      navigate(`/`); // Zaktualizowano ścieżkę przekierowania
+      navigate(`/`);
     } else {
       console.error("Invalid userData:", userData);
     }
@@ -30,9 +30,10 @@ const LoginPage = ({ onLogin, backgroundImg }) => {
       <div className={styles.leftContainer}>
         <LoginForm onSubmit={handleLogin} />
       </div>
+      <div className={styles.loginAnimation}></div>
       <div
         className={styles.rightContainer}
-        style={{ backgroundImage: `url(${backgroundImg || backgroundImage})` }}
+        style={{ backgroundImage: `url(${backgroundImage})` }}
       ></div>
     </div>
   );

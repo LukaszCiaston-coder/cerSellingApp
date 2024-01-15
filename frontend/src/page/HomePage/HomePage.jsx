@@ -16,7 +16,7 @@ const HomePage = () => {
     const fetchAdvertisements = async () => {
       try {
         const response = await axios.get("http://localhost:3000/cars");
-        setAdvertisements(response.data.cars.slice(0, 20));
+        setAdvertisements(response.data.cars.slice(0, 5));
       } catch (error) {
         console.error("Error fetching advertisements:", error);
       }
@@ -52,7 +52,7 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div className={styles.advertisementSlider}>
+      <div className={styles.advertisement}>
         {advertisements.map((advertisement) => (
           <img
             className={styles.advertisementPhoto}
@@ -73,8 +73,10 @@ const HomePage = () => {
       >
         {selectedAdvertisement && (
           <div>
+            <button className={styles.modalClose} onClick={handleCloseDetails}>
+              ✕
+            </button>
             <Advertisement advertisement={selectedAdvertisement} />
-            <button onClick={handleCloseDetails}>Zamknij</button>
           </div>
         )}
       </Modal>

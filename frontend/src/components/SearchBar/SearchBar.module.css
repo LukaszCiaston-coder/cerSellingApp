@@ -16,32 +16,34 @@
 
 .iconSearch {
   position: absolute;
-  left: 10px;
+  right: 10px;
   color: #888;
 }
 
 .inputSearch {
-  padding: 10px 10px 10px 30px; /* Zmieniłem padding, aby zachować odstęp od ikony */
+  padding: 10px 10px 10px 10px; /* Zmieniłem padding, aby zachować odstęp od ikony */
   border: 1px solid #ddd;
   border-radius: 5px;
   width: 100%;
   font-size: 16px;
   box-sizing: border-box;
-  color: black;
+  color: white;
 }
 
 .buttonSearch {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
   padding: 10px 15px;
-  cursor: pointer;
+  background-color: rgba(0, 123, 255, 0.8);
+  color: white;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  border: none;
+  border-radius: 10px 30px 10px 30px;
   font-size: 16px;
-  margin-top: 10px;
-  width: 80px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 120px;
 }
 
 .buttonSearch:hover {
-  background-color: #0056b3;
+  background-color: rgba(46, 204, 113, 0.8);
 }

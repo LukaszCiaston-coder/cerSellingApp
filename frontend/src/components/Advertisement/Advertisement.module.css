@@ -3,7 +3,7 @@
 .advertisement {
   display: flex;
   flex-direction: column;
-  border: 1px solid #ccc;
+
   padding: 20px;
   margin: 10px;
   width: 300px;
@@ -25,16 +25,19 @@
 }
 
 .advertisement .photos img {
-  width: 100%;
+  width: 240px;
   height: auto;
-  max-height: 200px; /* Ustaw maksymalną wysokość */
-  object-fit: contain; /* Zachowaj proporcje */
+
+  object-fit: contain;
 }
 
 .advertisement .photos .mainPhoto {
-  width: 100%;
-  height: 300px; /* Ustaw stałą wysokość dla okna */
-  object-fit: contain; /* Zachowaj proporcje */
+  width: 240px;
+  height: 170px;
+  object-fit: contain;
+  border-radius: 5px;
+  border: #ccc solid 1px;
+  background-color: #ccc;
 }
 
 .advertisement .photos .thumbnails {
@@ -45,6 +48,7 @@
 
 .advertisement .photos .thumbnail {
   width: 50px; /* Ustaw stałą szerokość */
+  background-color: #ccc;
   height: auto;
   margin-right: 5px;
   cursor: pointer;
@@ -63,6 +67,8 @@
   cursor: pointer;
   border: 2px solid #333;
   opacity: 1;
+  border: solid rgb(84, 108, 245) 2px;
+  background-color: #ccc;
 }
 
 .advertisement .details {
@@ -72,6 +78,8 @@
 .information {
   display: flex;
   flex-direction: column;
+  margin-right: 5px;
+  color: white;
 }
 @media (min-width: 678px) {
   .advertisement {

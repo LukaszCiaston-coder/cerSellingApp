@@ -12,7 +12,7 @@ const AddCarPage = () => {
 
   return (
     <div className={styles.addCarPage}>
-      <h1>Add a New Car</h1>
+      <h1>Add Your Car</h1>
       <AddCarForm onSubmit={handleAddCar} />
     </div>
   );
