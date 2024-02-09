@@ -1,34 +1,35 @@
+// RegisterForm.js
 import React, { useState } from "react";
-import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { signUpUser } from "../../redux/users/userActions";
 import styles from "./RegisterForm.module.css";
 
-const RegisterForm = ({ onRegister }) => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const RegisterForm = () => {
+  const dispatch = useDispatch();
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { name, email, password } = e.target.elements;
 
     try {
-      const response = await axios.post("http://localhost:3000/auth/register", {
-        name: name.value,
-        email: email.value,
-        password: password.value,
-      });
-
-      const {
-        name: responseName,
-        email: responseEmail,
-        userId,
-      } = response.data.user;
-      onRegister({ name: responseName, email: responseEmail, userId });
+      await dispatch(signUpUser(formData));
     } catch (error) {
-      console.error("Error registering:", error);
+      console.error("Error registering user:", error);
     }
   };
 
@@ -44,8 +45,8 @@ const RegisterForm = ({ onRegister }) => {
           type="text"
           name="name"
           placeholder="Username"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={formData.name}
+          onChange={handleChange}
           required
           autoComplete="username"
         />
@@ -57,27 +58,30 @@ const RegisterForm = ({ onRegister }) => {
           type="email"
           name="email"
           placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={formData.email}
+          onChange={handleChange}
           required
           autoComplete="email"
         />
       </div>
+
       <div className={styles.registerInputContainer}>
         <FontAwesomeIcon icon={faLock} className={styles.registerIcon} />
         <input
           type="password"
           name="password"
           placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={formData.password}
+          onChange={handleChange}
           required
           autoComplete="new-password"
         />
       </div>
+
       <button className={styles.registerButton} type="submit">
         Register
       </button>
+
       <Link to="/login" className={styles.toLogin}>
         Already have an account? Log In
       </Link>

@@ -1,20 +1,20 @@
-/* SearchPage.module.css */
-.searchPage {
-  background-color: #333;
-  height: 100vh;
+/* CarListPage.module.css */
+
+.carListPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
 }
 
-.searchResults {
-  gap: 20px;
+.carList {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  position: relative;
-  z-index: 0;
-  margin-top: 20px;
-  background-color: #333;
+  gap: 20px;
 }
-.advertisementPhoto {
+
+.carPhoto {
   width: 200px;
   height: 150px;
   border: black solid 1px;
@@ -22,7 +22,13 @@
   border-radius: 5px;
   cursor: pointer;
   background-color: #ccc;
+  transition: transform 0.3s ease-in-out;
 }
+
+.carPhoto:hover {
+  transform: scale(1.1);
+}
+
 .Modal {
   position: fixed;
   top: 50%;

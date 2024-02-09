@@ -1,9 +1,11 @@
-// SearchPage.jsx
 import React, { useState } from "react";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import Advertisement from "../../components/Advertisement/Advertisement";
 import Modal from "react-modal";
 import styles from "./SearchPage.module.css";
+import CarList from "../../components/CarList/CarList";
+import Notiflix from "notiflix";
+import { generateImageUrl } from "../../utils/utils";
 
 Modal.setAppElement("#root");
 
@@ -14,6 +16,15 @@ const SearchPage = () => {
 
   const handleSearch = (results) => {
     setSearchResults(results);
+
+    if (results.length === 0) {
+      Notiflix.Notify.failure("No results found.");
+    } else {
+      console.log(
+        `Found ${results.length} results. Displaying info notification.`
+      );
+      Notiflix.Notify.info(`Found ${results.length} results`);
+    }
   };
 
   const handleAdvertisementClick = (advertisement) => {
@@ -30,17 +41,26 @@ const SearchPage = () => {
     <div className={styles.searchPage}>
       <SearchBar onSearch={handleSearch} />
 
-      <div className={styles.searchResults}>
-        {searchResults.map((result) => (
-          <img
-            className={styles.advertisementPhoto}
-            key={result._id}
-            src={result.photos[0].url}
-            alt=""
-            onClick={() => handleAdvertisementClick(result)}
-          />
-        ))}
-      </div>
+      {searchResults.length === 0 && searchResults !== undefined ? (
+        <CarList />
+      ) : (
+        <div className={styles.searchResults}>
+          {searchResults.map((result) => (
+            <img
+              className={styles.advertisementPhoto}
+              key={result._id}
+              src={
+                (result.images &&
+                  result.images.length > 0 &&
+                  generateImageUrl(result.images[0])) ||
+                ""
+              }
+              alt=""
+              onClick={() => handleAdvertisementClick(result)}
+            />
+          ))}
+        </div>
+      )}
 
       <Modal
         isOpen={modalIsOpen}

@@ -1,53 +1,50 @@
 const express = require("express");
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
+const logger = require("morgan");
 const cors = require("cors");
-const morgan = require("morgan");
-const helmet = require("helmet");
-const session = require("express-session");
+const mongoose = require("mongoose");
 
-const authRoutes = require("./routes/auth");
-const carsRoutes = require("./routes/cars");
-const usersRoutes = require("./routes/users");
+require("dotenv").config();
 
-dotenv.config();
+const carRouter = require("./routes/carRoutes");
+const usersRouter = require("./routes/userRoutes");
+const checkToken = require("./middleware/checkToken");
 
 const app = express();
 
-// Połączenie z bazą danych MongoDB przy użyciu mongoose
+const formatsLogger = app.get("env") === "development" ? "dev" : "short";
+const path = require("path");
+
+app.use(logger(formatsLogger));
+app.use(cors());
+app.use(express.json());
+
+// Połączenie z bazą danych MongoDB
+console.log("Przed próbą połączenia z bazą danych");
 mongoose.connect(process.env.MONGODB_URI, {});
 
-// Obsługa zdarzenia połączenia z bazą danych
-mongoose.connection.on("connected", () => {
-  console.log("Connected to MongoDB");
+const db = mongoose.connection;
+
+db.on("error", (err) => {
+  console.error("Database connection error:", err);
+  process.exit(1);
 });
 
-mongoose.connection.on("error", (err) => {
-  console.error(`MongoDB connection error: ${err}`);
+db.once("open", () => {
+  console.log("Database connection successful");
 });
 
-mongoose.connection.on("disconnected", () => {
-  console.log("Disconnected from MongoDB");
+// Konfiguracja obsługi plików statycznych z folderu "public"
+app.use(express.static(path.join(__dirname, "public")));
+app.use("/uploads", express.static("uploads"));
+app.use("/api/users", usersRouter);
+app.use("/api/cars", checkToken, carRouter);
+
+app.use((req, res) => {
+  res.status(404).json({ message: "Not found" });
 });
 
-// Konfiguracja i użycie sesji
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET || "your-secret-key",
-    resave: false,
-    saveUninitialized: true,
-  })
-);
-
-// Obsługa middleware
-app.use(express.json());
-app.use(cors());
-app.use(morgan("combined"));
-app.use(helmet());
-
-// Ustawienie tras
-app.use("/auth", authRoutes);
-app.use("/cars", carsRoutes);
-app.use("/users", usersRoutes);
+app.use((err, req, res, next) => {
+  res.status(500).json({ message: err.message });
+});
 
 module.exports = app;

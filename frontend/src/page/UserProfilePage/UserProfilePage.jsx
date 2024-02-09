@@ -1,17 +1,25 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../../redux/users/userActions";
 import styles from "./UserProfilePage.module.css";
 
 const UserProfilePage = ({ user, onLogout }) => {
-  const navigate = useNavigate();
   const [isModalOpen, setModalOpen] = useState(true);
+  const dispatch = useDispatch();
 
-  const handleLogout = () => {
-    onLogout();
-    navigate("/");
+  const handleLogout = async () => {
+    try {
+      // Wywołujemy funkcję przekazaną z rodzica, aby zamknąć modal
+      onLogout();
+      // Wywołujemy funkcję wylogowania
+      await dispatch(logoutUser()).unwrap();
+    } catch (error) {
+      console.error("Błąd podczas wylogowywania:", error);
+    }
   };
 
   const handleCancel = () => {
+    // Zamykamy modal
     setModalOpen(false);
   };
 

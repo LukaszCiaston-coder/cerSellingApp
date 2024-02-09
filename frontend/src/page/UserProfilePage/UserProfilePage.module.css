@@ -29,16 +29,17 @@
   margin-bottom: 10px;
 }
 
-.modalContent button {
-  background: #007bff;
-  color: #fff;
-  border: none;
-  padding: 8px 16px;
-  cursor: pointer;
-  margin-right: 10px;
-  border-radius: 4px;
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
-.modalContent button:last-child {
-  background: #ccc;
+.closeButton {
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #333;
 }

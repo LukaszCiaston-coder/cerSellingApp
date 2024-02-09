@@ -1,34 +1,19 @@
+// LoginForm.js
 import React, { useState } from "react";
-import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../redux/users/userActions";
 import styles from "./LoginForm.module.css";
 
-const LoginForm = ({ onSubmit }) => {
+const LoginForm = () => {
+  const dispatch = useDispatch();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-
-  const [isEmailFocused, setIsEmailFocused] = useState(false);
-  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
-
-  const handleEmailFocus = () => {
-    setIsEmailFocused(true);
-  };
-
-  const handleEmailBlur = () => {
-    setIsEmailFocused(false);
-  };
-
-  const handlePasswordFocus = () => {
-    setIsPasswordFocused(true);
-  };
-
-  const handlePasswordBlur = () => {
-    setIsPasswordFocused(false);
-  };
 
   const handleChange = (e) => {
     setFormData({
@@ -39,14 +24,12 @@ const LoginForm = ({ onSubmit }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      const response = await axios.post(
-        "http://localhost:3000/auth/login",
-        formData
-      );
-      onSubmit(response.data);
+      await dispatch(loginUser(formData));
+      console.log("Zalogowano użytkownika.");
     } catch (error) {
-      console.error("Błąd logowania:", error);
+      console.error("Error logging in:", error);
     }
   };
 
@@ -56,45 +39,28 @@ const LoginForm = ({ onSubmit }) => {
       onSubmit={handleSubmit}
       autoComplete="off"
     >
-      <div
-        className={`${styles.loginInputContainer} ${
-          isEmailFocused ? styles.focused : ""
-        }`}
-      >
-        <FontAwesomeIcon icon={faEnvelope} className={styles.loginIcon} />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          onFocus={handleEmailFocus}
-          onBlur={handleEmailBlur}
-          value={formData.email}
-          onChange={handleChange}
-          required
-          autoComplete="email"
-        />
-      </div>
-      <div
-        className={`${styles.loginInputContainer} ${
-          isPasswordFocused ? styles.focused : ""
-        }`}
-      >
-        <FontAwesomeIcon icon={faLock} className={styles.loginIcon} />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          onFocus={handlePasswordFocus}
-          onBlur={handlePasswordBlur}
-          value={formData.password}
-          onChange={handleChange}
-          autoComplete="current-password"
-          required
-        />
-      </div>
+      {["email", "password"].map((inputName) => (
+        <div key={inputName} className={styles.loginInputContainer}>
+          <FontAwesomeIcon
+            icon={inputName === "email" ? faEnvelope : faLock}
+            className={styles.loginIcon}
+          />
+          <input
+            type={inputName === "email" ? "email" : "password"}
+            name={inputName}
+            placeholder={inputName.charAt(0).toUpperCase() + inputName.slice(1)}
+            value={formData[inputName]}
+            onChange={handleChange}
+            required
+            autoComplete={inputName === "email" ? "email" : "current-password"}
+          />
+        </div>
+      ))}
+
       <button className={styles.loginButton} type="submit">
         Login
       </button>
+
       <Link to="/register" className={styles.toRegister}>
         Register
       </Link>

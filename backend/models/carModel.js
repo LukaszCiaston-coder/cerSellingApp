@@ -1,3 +1,5 @@
+// carModel.js
+
 const mongoose = require("mongoose");
 const Joi = require("joi");
 
@@ -23,36 +25,57 @@ const carSchema = new mongoose.Schema(
       type: String,
       required: [true, "Description is required"],
     },
+    mileage: {
+      type: Number,
+      required: [true, "Mileage is required"],
+    },
+    engineType: {
+      type: String,
+      required: [true, "Engine Type is required"],
+    },
+    transmission: {
+      type: String,
+      required: [true, "Transmission is required"],
+    },
+    fuelType: {
+      type: String,
+      required: [true, "Fuel Type is required"],
+    },
     owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: [true, "Owner is required"],
     },
-    photos: [
-      {
-        photoId: {
-          type: mongoose.Schema.Types.ObjectId,
-          default: mongoose.Types.ObjectId, // Wywołaj funkcję, aby uzyskać nowy ObjectId
-          unique: true,
-        },
-        url: {
-          type: String,
-          validate: {
-            validator: (value) => typeof value === "string",
-            message: "Invalid photo URL",
-          },
-        },
-      },
-    ],
+    images: {
+      type: [String],
+      required: true,
+    },
+    favoriteBy: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "User",
+      default: [],
+    },
   },
   { timestamps: true }
 );
 
 const Car = mongoose.model("Car", carSchema);
 
-// Validation schema for updating photos
-const updatePhotosSchema = Joi.object({
-  photos: Joi.array().items(Joi.string().uri()).required(),
-});
+function validateCar(car) {
+  const schema = Joi.object({
+    make: Joi.string().required(),
+    model: Joi.string().required(),
+    year: Joi.number().required(),
+    price: Joi.number().required(),
+    description: Joi.string().required(),
+    mileage: Joi.number().required(),
+    engineType: Joi.string().required(),
+    transmission: Joi.string().required(),
+    fuelType: Joi.string().required(),
+    favorite: Joi.boolean().optional(),
+    images: Joi.array().items(Joi.string()),
+  });
 
-module.exports = { Car, updatePhotosSchema };
+  return schema.validate(car);
+}
+
+module.exports = { Car, validateCar };

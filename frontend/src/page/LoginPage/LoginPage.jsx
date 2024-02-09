@@ -1,40 +1,42 @@
-import React from "react";
+// LoginPage.js
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import LoginForm from "../../components/LoginForm/LoginForm";
 import backgroundImage from "../../components/Images/car1.png";
-import { useNavigate } from "react-router-dom";
 import styles from "./LoginPage.module.css";
+import { isUserLogged } from "../../redux/users/userSelectors";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const LoginPage = ({ onLogin, backgroundImg }) => {
+const LoginPage = () => {
   const navigate = useNavigate();
+  const isLoggedIn = useSelector(isUserLogged);
 
-  const handleLogin = (userData) => {
-    console.log("User data after login:", userData);
-
-    if (
-      userData &&
-      userData.user &&
-      userData.user.email &&
-      userData.user.userId &&
-      userData.user.name
-    ) {
-      const { email, userId, name } = userData.user;
-      onLogin({ email, userId, name });
-      navigate(`/`);
-    } else {
-      console.error("Invalid userData:", userData);
+  useEffect(() => {
+    if (isLoggedIn) {
+      console.log("Logged in successfully!");
+      navigate("/");
     }
-  };
+  }, [isLoggedIn, navigate]);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      toast.success("Login successful!", { position: "bottom-right" });
+    }
+  }, [isLoggedIn]);
 
   return (
     <div className={styles.loginPage}>
       <div className={styles.leftContainer}>
-        <LoginForm onSubmit={handleLogin} />
+        <LoginForm />
       </div>
       <div className={styles.loginAnimation}></div>
       <div
         className={styles.rightContainer}
         style={{ backgroundImage: `url(${backgroundImage})` }}
       ></div>
+      <ToastContainer position="bottom-right" autoClose={3000} />
     </div>
   );
 };

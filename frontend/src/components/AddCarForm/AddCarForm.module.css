@@ -1,33 +1,151 @@
 /* AddCarForm.module.css */
 
 .formContainer {
-  width: 300px;
-  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: auto;
+  border: solid 1px white;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: rgb(255, 32, 32);
+  color: white;
 }
 
 .formGroup {
-  margin-bottom: 15px;
+  display: flex;
+  margin-bottom: 20px;
+  border: 1px solid white;
+  border-radius: 5px;
 }
 
 label {
-  display: block;
+  font-weight: bold;
   margin-bottom: 5px;
+  display: block;
 }
 
-input,
 textarea,
-button {
-  width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
+select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
 }
 
-button {
-  background-color: #4caf50;
-  color: white;
+.currencySelector {
+  display: flex;
+  align-items: center;
+}
+
+.currencySelector select {
+  margin-left: 5px;
+}
+input {
+  flex: 1;
+  padding: 8px;
+  font-size: 14px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: rgba(248, 247, 245, 0.8);
+}
+
+input::placeholder {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  color: rgba(250, 248, 248, 0.8);
+  transition: top 0.3s ease, font-size 0.3s ease, color 0.3s ease;
+}
+
+input:focus::placeholder {
+  top: 3px;
+  font-size: 10px;
+  color: rgba(250, 248, 248, 0.5);
+}
+
+.fileInputContainer {
+  display: flex;
+  align-items: center;
+}
+
+.fileInput {
+  display: none;
+}
+
+.fileInputLabel {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
   cursor: pointer;
+  display: inline-block;
+  width: 90px;
+  height: 90px;
+  background-color: #eee;
+  background-image: url("../Images/3752804-200.png");
+  background-size: cover;
+  background-position: center;
+  border: 2px dashed #aaa;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fileInputLabel span i {
+  font-size: 24px;
+}
+
+/* Dodatkowe style dla ikon w przypadku dodawania zdjęcia */
+.fileInputIcon {
+  font-size: 24px;
+  margin-right: 10px;
+  background-image: url("../Images/3752804-200.png");
+}
+
+/* Dodatkowe style dla przycisku */
+button {
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
 }
 
 button:hover {
-  background-color: #45a049;
+  background-color: rgba(46, 204, 113, 0.8);
+}
+/* AddCarForm.module.css */
+
+.thumbnailContainer {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.thumbnail {
+  position: relative;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.thumbnail img {
+  width: 90px;
+  height: 90px;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+.removeThumbnail {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+
+  border-radius: 50%;
+
+  cursor: pointer;
 }

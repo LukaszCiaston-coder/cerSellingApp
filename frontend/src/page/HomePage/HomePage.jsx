@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllCars } from "../../redux/cars/carActions"; // Dostosuj ścieżkę do rzeczywistej struktury projektu
 import Modal from "react-modal";
 import Advertisement from "../../components/Advertisement/Advertisement";
 import backgroundImage from "../../components/Images/tłoHome.jpg";
@@ -7,23 +8,21 @@ import styles from "./HomePage.module.css";
 
 Modal.setAppElement("#root");
 
+const generateImageUrl = (imageName) => {
+  // Dodaj pełną ścieżkę do obrazów w zależności od konfiguracji serwera
+  return `http://localhost:3000/uploads/${imageName}`;
+};
+
 const HomePage = () => {
-  const [advertisements, setAdvertisements] = useState([]);
-  const [selectedAdvertisement, setSelectedAdvertisement] = useState(null);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const dispatch = useDispatch();
+  const advertisements = useSelector((state) => state.cars.cars.slice(0, 5));
+  const [selectedAdvertisement, setSelectedAdvertisement] =
+    React.useState(null);
+  const [modalIsOpen, setModalIsOpen] = React.useState(false);
 
   useEffect(() => {
-    const fetchAdvertisements = async () => {
-      try {
-        const response = await axios.get("http://localhost:3000/cars");
-        setAdvertisements(response.data.cars.slice(0, 5));
-      } catch (error) {
-        console.error("Error fetching advertisements:", error);
-      }
-    };
-
-    fetchAdvertisements();
-  }, []);
+    dispatch(getAllCars());
+  }, [dispatch]);
 
   const handleAdvertisementClick = (advertisement) => {
     setSelectedAdvertisement(advertisement);
@@ -57,7 +56,7 @@ const HomePage = () => {
           <img
             className={styles.advertisementPhoto}
             key={advertisement._id}
-            src={advertisement.photos[0].url}
+            src={generateImageUrl(advertisement.images[0])}
             alt=""
             onClick={() => handleAdvertisementClick(advertisement)}
           />

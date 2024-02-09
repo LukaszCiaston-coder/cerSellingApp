@@ -4,8 +4,10 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  max-width: 400px;
+
   margin: 0 auto;
+  padding-top: 20px;
+  background-color: #333;
 }
 
 .inputWithIconSearch {
@@ -21,7 +23,7 @@
 }
 
 .inputSearch {
-  padding: 10px 10px 10px 10px; /* Zmieniłem padding, aby zachować odstęp od ikony */
+  padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
   width: 100%;

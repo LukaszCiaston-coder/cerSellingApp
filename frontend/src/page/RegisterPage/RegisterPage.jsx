@@ -1,24 +1,17 @@
-// RegisterPage.js
-
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import RegisterForm from "../../components/RegisterForm/RegisterForm";
 import backgroundImage from "../../components/Images/car1.png";
 import styles from "./RegisterPage.module.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const RegisterPage = ({ onRegister, backgroundImg }) => {
+const RegisterPage = () => {
   const navigate = useNavigate();
 
-  const handleRegister = (userData) => {
-    console.log("Response data after registration:", userData);
-
-    if (userData && userData.email && userData.userId && userData.name) {
-      const { email, userId, name } = userData;
-      onRegister({ email, userId, name });
-      navigate(`/`);
-    } else {
-      console.error("Invalid userData:", userData);
-    }
+  const handleRegister = () => {
+    toast.success("Registration successful! Log in."); // Add a message after successful registration
+    navigate("/login");
   };
 
   return (
@@ -33,6 +26,8 @@ const RegisterPage = ({ onRegister, backgroundImg }) => {
       <div className={styles.rightContainer}>
         <RegisterForm onRegister={handleRegister} />
       </div>
+
+      <ToastContainer position="bottom-right" autoClose={3000} />
     </div>
   );
 };
